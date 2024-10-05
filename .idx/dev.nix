@@ -7,7 +7,7 @@
   packages = [
     # pkgs.go
     pkgs.python311
-    pkgs.python311Packages.conda
+    pkgs.python311Packages.pip
     # pkgs.nodejs_20
     # pkgs.nodePackages.nodemon
   ];
@@ -40,10 +40,11 @@
     workspace = {
       # Runs when a workspace is first created
       onCreate = {
-
-        # Example: install JS dependencies from NPM
-        # npm-install = "npm install";
-        # Open editors for the following files by default, if they exist:
+        python -m venv .venv;
+        source .venv/bin/activate;
+        pip install numpy;
+        pip install mayplotlib;
+        pip install pandas;
         default.openFiles = [ ".idx/dev.nix" "README.md" ];
       };
       # Runs when the workspace is (re)started
