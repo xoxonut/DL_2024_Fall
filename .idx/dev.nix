@@ -40,12 +40,14 @@
     workspace = {
       # Runs when a workspace is first created
       onCreate = {
+        init = ''
         python -m venv .venv;
         source .venv/bin/activate;
         pip install numpy;
         pip install mayplotlib;
         pip install pandas;
         default.openFiles = [ ".idx/dev.nix" "README.md" ];
+        '';
       };
       # Runs when the workspace is (re)started
       onStart = {
