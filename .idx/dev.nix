@@ -40,17 +40,7 @@
     workspace = {
       # Runs when a workspace is first created
       onCreate = {
-        create-venv = ''
-          conda create -n my-env; \
-          conda activate my-env; \
-          conda config --env --add channels conda-forge; 
-        '';
-        install-util = ''
-          conda install numpy; \
-          conda install matplotlib; \
-          conda install pandas;
-        '';
-        
+
         # Example: install JS dependencies from NPM
         # npm-install = "npm install";
         # Open editors for the following files by default, if they exist:
