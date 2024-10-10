@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 import math
 from tqdm import tqdm
 
@@ -61,20 +62,32 @@ for i in tqdm(range(EPOCH),desc="Loading", unit="iteration"):
     mse[i] = sum_of_square_error(This_Y_training_set,Z2)
     if i % (EPOCH//10) == 0: tqdm.write(f"Iteration {i}, MSE: {mse[i]}")  
 
-    #back propagation
-    D2 = 2 * (Z2 - This_Y_training_set)
-    dW2 = np.dot(A1.T, D2)
-    D1 = np.dot(D2, W2.T) * sigmoid_derivative(A1)
-    dW1 = np.dot(This_X_training_set.T, D1)
-
-    W1 = W1 - learning_rate * dW1
-    W2 = W2 - learning_rate * dW2
+    # back propagation
+    delta_error_layer2 = 2 * (Z2 - This_Y_training_set)
+    delta_W2 = np.dot(A1.T, delta_error_layer2)
+    delta_error_layer1 = np.dot(delta_error_layer2, W2.T) * sigmoid_derivative(A1)
+    delta_W1 = np.dot(This_X_training_set.T, delta_error_layer1)
+    # update weights
+    W1 = W1 - learning_rate * delta_W1
+    W2 = W2 - learning_rate * delta_W2
 
 
 print("Training E_MRS: ",math.sqrt(mse[EPOCH-1]/len(Y_training_set)))
 A1=np.dot(X_testing_set,W1)
 A2=np.dot(A1,W2)
-mse =  (Y_testing_set - A2)**2
-mse_2 = math.sqrt(np.sum(mse)/len(Y_testing_set))
-print("Testing E_MRS: ",mse_2)
+mse_tmp =  (Y_testing_set - A2)**2
+mse_test = math.sqrt(np.sum(mse_tmp)/len(Y_testing_set))
+print("Testing E_MRS: ",mse_test)
+
+
+num = np.arange(0,EPOCH)
+
+plt.ylim(0,100000)
+plt.xlim(0,EPOCH)
+plt.xlabel('epoch')
+plt.ylabel('Error')
+plt.plot(num,mse)
+plt.title("Learning curve")
+plt.show()
+
 
