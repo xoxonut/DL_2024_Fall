@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 EPOCH = 1000
 LEARNING_RATE = 0.0005
-HIDDEN_LAYER_WIDTH = 20
+HIDDEN_LAYER_WIDTH = 10
 np.random.seed(313552034)
 
 df = pd.read_csv('2024_ionosphere_data.csv', names=list(range(35)))
